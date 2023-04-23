@@ -78,10 +78,14 @@ fn main() {
     // then they are equal, no matter the location or number of attendees at the party.
     // - Uncomment and run the code below.
     impl PartialEq for Party {
-        fn eq(&self, other: &Self) -> bool {
+        fn eq(self: &Party, other: &Party) -> bool {
             return self.cake == other.cake;
         }
+        //fn eq(self, other: &Self) -> bool {
+        //     return self.cake == other.cake;
+        // }
     }
+
     let other_party = Party {
         at_restaurant: false,
         num_people: 235,
@@ -96,8 +100,13 @@ fn main() {
     // - Uncomment the code below AND uncomment the smell_cake() function at the bottom of this file
     // - Implement `From<Party> for Cake` so that the function call below works.
     //
+    impl From<Party> for Cake {
+        fn from(party: Party) -> Self {
+            party.cake
+        }
+    }
 
-    // smell_cake(party);
+    smell_cake(party);
 
     // Challenge 2: Implement `From<&Party> for Cake` so that you can smell your cake without
     // consuming it. Change the code above to pass in a &party. Then uncomment and run the code
@@ -111,6 +120,6 @@ pub fn admire_cake(cake: Cake) {
     println!("What a nice {:?} cake! 🎂", cake);
 }
 
-// pub fn smell_cake<T: Into<Cake>>(something: T) {
-//     println!("Hmm...something smells like a {:?} cake!", something.into());
-// }
+pub fn smell_cake<T: Into<Cake>>(something: T) {
+    println!("Hmm...something smells like a {:?} cake!", something.into());
+}
